@@ -4,13 +4,42 @@ package main
 import (
 	"os"
 	"log"
+	"flag"
 	"net/http"
 
 	"github.com/graphql-go/graphql"
 	"github.com/graphql-go/handler"
 )
 
+var (
+	port string
+	elasticsearchURL string
+)
+
 func main() {
+	// flags
+	flag.StringVar(&elasticsearchURL, "elasticsearch_url", "", "Elasticsearch URL")
+	flag.StringVar(&port, "port", "", "Port on which graphql server should run")
+	flag.Parse()
+
+	// elasticsearch url
+	if elasticsearchURL == "" {
+		elasticsearchURL = os.Getenv("ELASTICSEARCH_URL")		
+		if elasticsearchURL == "" {
+			log.Fatal("ELATICSEARCH_URL enviornment variable is missing")
+		}
+	}
+	
+
+	// port config
+	if port == "" {
+		port = os.Getenv("PORT")
+		if port == "" {
+			port = "8080"	
+		}
+	}
+
+
 	fields := graphql.Fields{
 		"hello": &graphql.Field{
 			Type: graphql.String,
@@ -34,13 +63,11 @@ func main() {
 
 	http.Handle("/graphql", h)
 
-	// port config
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"	
-	}
-
 	log.Println("=> started elasticsearch graphql server on port:",port)
 	log.Println("=> graphql endpoint: /graphql")
-	http.ListenAndServe(":"+ port, nil)
+
+	// log envs
+	log.Println("=> elasticsearch url", elasticsearchURL)
+
+	http.ListenAndServe("0.0.0.0:"+ port, nil)
 }

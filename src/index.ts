@@ -4,8 +4,13 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import { ApolloServer } from 'apollo-server-express';
 import { schema } from './schema';
+import { bootTimeValidation } from './utils/boot-validation';
+
 const main = async () => {
   try {
+    // throws error if correct envs are not present
+    bootTimeValidation();
+
     // create express app
     const app: express.Application = express();
 

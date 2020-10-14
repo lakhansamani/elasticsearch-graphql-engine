@@ -8,6 +8,7 @@
     "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
-    "no-useless-catch": 0
+    "no-useless-catch": 0,
+    "@typescript-eslint/no-explicit-any": 0
   }
 }

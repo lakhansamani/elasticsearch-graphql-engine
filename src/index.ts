@@ -5,7 +5,6 @@ import bodyParser from 'body-parser';
 import { ApolloServer } from 'apollo-server-express';
 import { schema } from './schema';
 import { bootTimeValidation } from './utils/boot-validation';
-import { bootServer } from './utils/boot-server';
 
 const main = async () => {
   try {
@@ -34,7 +33,6 @@ const main = async () => {
     // bind port and start server
     const port: number = parseInt(process.env.PORT || '3000', 10);
     app.listen(port, () => {
-      bootServer();
       console.log(`🚀 server started on port: ${port}`);
     });
   } catch (error) {

@@ -1,4 +1,4 @@
-import { ESClient } from '../elasticsearch/client';
+import { ESClient } from './client';
 
 export const getMappings = async (): Promise<Record<string, any>> => {
   try {

@@ -1,4 +1,4 @@
-import { getMappings } from './mappings';
+import { getMappings } from '../elasticsearch/mappings';
 
 export const bootServer = async (): Promise<void> => {
   try {

@@ -1,13 +1,11 @@
+import { ApiResponse } from '@elastic/elasticsearch';
+
 export interface Ping {
-  pong: string;
+  response: ApiResponse;
 }
 
 export const PingTypeDef = `
-  type Ping {
-    pong: String!
-  }
-
   type Query {
-    ping: Ping!
+    ping: Response!
   }
 `;

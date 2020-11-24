@@ -5,7 +5,6 @@ export class ESClient {
 
   public static getInstance(): Client {
     if (ESClient.instance) {
-      console.log('returned from here...');
       return ESClient.instance;
     }
     ESClient.instance = new Client({

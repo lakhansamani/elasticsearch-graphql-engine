@@ -7,7 +7,9 @@ import { PingTypeDef } from './types/ping';
 import { PingResolver } from './resolvers/ping';
 import { JSONResolver } from './resolvers/json';
 
-export const schema = makeExecutableSchema({
-  typeDefs: [JSONTypeDef, ResponseTypeDef, PingTypeDef],
-  resolvers: { ...PingResolver, ...JSONResolver },
-});
+export const getSchema = (esSchema: string) => {
+  return makeExecutableSchema({
+    typeDefs: [JSONTypeDef, ResponseTypeDef, PingTypeDef, esSchema],
+    resolvers: { ...PingResolver, ...JSONResolver },
+  });
+};

@@ -1,13 +1,11 @@
 import { ApiResponse } from '@elastic/elasticsearch';
 import { ESClient } from './client';
 
-export const getMappings = async (
-  indices: string[] = [],
-): Promise<ApiResponse> => {
+export const getIndices = async (): Promise<ApiResponse> => {
   try {
-    return await ESClient.getInstance().indices.getMapping({
-      index: indices,
+    return await ESClient.getInstance().cat.indices({
       expand_wildcards: 'open',
+      format: 'json',
     });
   } catch (err) {
     throw err;

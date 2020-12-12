@@ -3,8 +3,10 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import { ApolloServer } from 'apollo-server-express';
-import { schema } from './schema';
-import { bootTimeValidation } from './utils/boot-validation';
+import { getSchema } from './schema';
+import { bootTimeValidation } from './utils/boot_validation';
+
+import { generateSchema } from './utils/schema_generator';
 
 const main = async () => {
   try {
@@ -21,8 +23,10 @@ const main = async () => {
     app.use(bodyParser.json());
 
     const gqPath = '/graphql';
+
+    const esSchema = await generateSchema();
     const apolloServer = new ApolloServer({
-      schema,
+      schema: getSchema(esSchema),
       introspection: true,
       playground: true,
       context: ({ req, res }) => ({ req, res }),
@@ -32,7 +36,7 @@ const main = async () => {
 
     // bind port and start server
     const port: number = parseInt(process.env.PORT || '3000', 10);
-    app.listen(port, () => {
+    app.listen(port, async () => {
       console.log(`🚀 server started on port: ${port}`);
     });
   } catch (error) {

@@ -12,6 +12,10 @@ Takes any Elasticsearch cluster as its source and provides with graphql url whic
 - [ ] Add testing for query resolvers
 - [ ] Add documentation on getting started
 
+## V2 Roadmap
+
+- [ ] Add mutation for the index
+
 ## Quick start
 
 - Install dependencies `yarn` or `npm install`

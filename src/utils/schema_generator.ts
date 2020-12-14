@@ -10,6 +10,10 @@ import { convertToPascalCase } from './pascal_case';
 import { convertToSnakeCase } from './snake_case';
 import { DynamicQueryResolver } from '../resolvers/dynamic_query_builder';
 
+/**
+ * Helps in generating schema, query, resolvers for given indices
+ * @param defaultIndices list of indices for which the schema, query + resolvers are to be generated
+ */
 export const generateSchema = async (
   defaultIndices: string[] = [],
 ): Promise<Record<string, unknown>> => {
@@ -51,6 +55,8 @@ export const generateSchema = async (
         const flatMap = flattenMapping(mappings[indexName].mappings);
         if (Object.keys(flatMap).length) {
           const schemaTypes = convertMappingToType(indexName, flatMap);
+
+          // add query response type to schema, so that we can add some meta fields to response of query, eg total.
           const newSchemas =
             schemas +
             `${gqTypesToSchema(schemaTypes)}\n` +

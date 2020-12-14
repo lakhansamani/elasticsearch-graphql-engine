@@ -1,8 +1,11 @@
 import { format } from 'graphql-formatter';
 import { GraphqlTypeMap } from './graphql_type_map';
 import { convertToPascalCase } from './pascal_case';
-// import { convertToSnakeCase } from './snake_case';
 
+/**
+ * Flattens the mapping
+ * @param mappings mapping object
+ */
 export const flattenMapping = (
   mappings: Record<string, unknown>,
 ): Record<string, unknown> => {
@@ -58,6 +61,13 @@ export const flattenMapping = (
   }, {});
 };
 
+/**
+ * Helps in getting all the graphql type definition objects based on mappings
+ * @param prefix index name / sub object name
+ * @param flattenMapping flat mappings obtained using above method, i.e. flattenMapping
+ * @param isInitialRecursion helps in determining if _id field is to be added or not
+ */
+
 export const convertMappingToType = (
   prefix: string,
   flattenMapping: Record<string, unknown>,
@@ -102,6 +112,10 @@ export const convertMappingToType = (
   return indexType;
 };
 
+/**
+ * converts the type definition object obtained using above function to graphql type string
+ * @param gqTypeMap mappings -> TypeDefinition object
+ */
 export const gqTypesToSchema = (gqTypeMap: Record<string, unknown>): string => {
   return Object.keys(gqTypeMap).reduce((agg: string, item: string) => {
     return (

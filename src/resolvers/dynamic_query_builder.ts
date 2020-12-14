@@ -21,12 +21,6 @@ export const DynamicQueryResolver = (
       _context: any,
       info: any,
     ) => {
-      const returnData = gqFields(info);
-      let sourceFields: string[] = [];
-      if (returnData.hits) {
-        sourceFields = Object.keys(returnData.hits);
-      }
-
       let esQuery: any = {
         match_all: {},
       };
@@ -48,6 +42,16 @@ export const DynamicQueryResolver = (
         esQuery.multi_match.weight = weight;
       }
 
+      // add source field filtering based on fields requested in query
+
+      // gqFields helps in getting the fields requested
+      const returnData = gqFields(info);
+      let sourceFields: string[] = [];
+      if (returnData.hits) {
+        sourceFields = Object.keys(returnData.hits);
+      }
+
+      // track_total_hits helps in getting the total number of hits even if it is > 10,000 records
       const queryBody: any = { query: esQuery, track_total_hits: true };
       if (sourceFields.length) {
         queryBody._source = {

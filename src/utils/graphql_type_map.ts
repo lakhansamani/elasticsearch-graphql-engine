@@ -1,3 +1,6 @@
+/**
+ * Map for mapping the ES types to GraphqlTypes
+ */
 export const GraphqlTypeMap: Record<string, string> = {
   keyword: 'String',
   string: 'String',

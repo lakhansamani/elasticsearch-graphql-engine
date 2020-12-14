@@ -1,5 +1,8 @@
 import { Client } from '@elastic/elasticsearch';
 
+/**
+ * Elasticsearch client used globally to make Elasticsearch calls
+ */
 export class ESClient {
   private static instance: Client;
 

@@ -26,7 +26,10 @@ const main = async () => {
     const gqPath = '/graphql';
 
     const { typeDef, resolvers } = await generateSchema();
+    // TODO: see if we can use .gql / .graphql files to import for
+    // this can help in persisting the data
     fs.writeFileSync(`${__dirname}/types/es_types.graphql`, <string>typeDef);
+
     const apolloServer = new ApolloServer({
       schema: getSchema(<string>typeDef, <Record<string, unknown>>resolvers),
       introspection: true,

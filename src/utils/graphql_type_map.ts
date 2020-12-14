@@ -11,5 +11,5 @@ export const GraphqlTypeMap: Record<string, string> = {
   half_float: 'Float',
   scaled_float: 'Float',
   boolean: 'Boolean',
-  date: 'Date',
+  date: 'String',
 };

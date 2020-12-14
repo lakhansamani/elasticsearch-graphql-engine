@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import { ApolloServer } from 'apollo-server-express';
+import fs from 'fs';
 import { getSchema } from './schema';
 import { bootTimeValidation } from './utils/boot_validation';
 
@@ -24,9 +25,10 @@ const main = async () => {
 
     const gqPath = '/graphql';
 
-    const esSchema = await generateSchema();
+    const { typeDef, resolvers } = await generateSchema();
+    fs.writeFileSync(`${__dirname}/types/es_types.graphql`, <string>typeDef);
     const apolloServer = new ApolloServer({
-      schema: getSchema(esSchema),
+      schema: getSchema(<string>typeDef, <Record<string, unknown>>resolvers),
       introspection: true,
       playground: true,
       context: ({ req, res }) => ({ req, res }),

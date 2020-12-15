@@ -35,6 +35,9 @@ const main = async () => {
       introspection: true,
       playground: true,
       context: ({ req, res }) => ({ req, res }),
+      cacheControl: {
+        defaultMaxAge: 5,
+      },
     });
 
     apolloServer.applyMiddleware({ app, path: gqPath });

@@ -120,8 +120,9 @@ export const gqTypesToSchema = (gqTypeMap: Record<string, unknown>): string => {
   return Object.keys(gqTypeMap).reduce((agg: string, item: string) => {
     return (
       agg +
+      '\n' +
       format(
-        `\ntype ${item} {
+        `type ${item} {
           ${Object.keys(<Record<string, unknown>>gqTypeMap[item]).reduce(
             (mapAgg, field) => {
               return (

@@ -56,16 +56,16 @@ export const generateSchema = async (
         if (Object.keys(flatMap).length) {
           const schemaTypes = convertMappingToType(indexName, flatMap);
 
-          // add query response type to schema, so that we can add some meta fields to response of query, eg total.
+          // add search query response type to schema, so that we can add some meta fields to response of query, eg total.
           const newSchemas =
             schemas +
-            `${gqTypesToSchema(schemaTypes)}\n` +
-            `\n
-          type ${indexName}SearchQueryResponse {
-            total: Int
-            hits: [${indexName}]
-          }
-        `;
+            `${gqTypesToSchema(schemaTypes)}` +
+            `type ${indexName}SearchQueryResponse {
+                total: Int
+                hits: [${indexName}]
+              }
+            `;
+          // query type per index
           const newQueries =
             queries +
             `${snakeCaseIndexName}(

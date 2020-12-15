@@ -3,6 +3,13 @@ import gqFields from 'graphql-fields';
 
 import { ESClient } from '../elasticsearch/client';
 
+interface QueryInterface {
+  query: string;
+  fields: string[];
+  weight: number[];
+  from: number;
+  size: number;
+}
 /**
  * Helps in generating dynamic query for elasticsearch indices
  */
@@ -17,7 +24,9 @@ export const DynamicQueryResolver = (
         query = '*',
         fields = [],
         weight = [],
-      }: { query: string; fields: string[]; weight: number[] },
+        from = 0,
+        size = 10,
+      }: QueryInterface,
       _context: any,
       info: any,
     ) => {
@@ -52,7 +61,12 @@ export const DynamicQueryResolver = (
       }
 
       // track_total_hits helps in getting the total number of hits even if it is > 10,000 records
-      const queryBody: any = { query: esQuery, track_total_hits: true };
+      const queryBody: any = {
+        query: esQuery,
+        track_total_hits: true,
+        from,
+        size,
+      };
       if (sourceFields.length) {
         queryBody._source = {
           includes: sourceFields,

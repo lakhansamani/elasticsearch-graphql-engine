@@ -68,7 +68,13 @@ export const generateSchema = async (
         `;
           const newQueries =
             queries +
-            `${snakeCaseIndexName}(query: String, fields: [String], weights: [Float]): ${indexName}SearchQueryResponse\n`;
+            `${snakeCaseIndexName}(
+              query: String,
+              fields: [String],
+              weights: [Float],
+              from: Int,
+              size: Int
+            ): ${indexName}SearchQueryResponse\n`;
           const newResolvers = {
             ...resolvers,
             ...DynamicQueryResolver(

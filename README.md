@@ -31,6 +31,8 @@ Example if you have `users` index in your Elasticsearch with some JSON data, the
         }
     }
 
+> Note: your index/field name is converted to snake case if it contains hyphen or special characters
+
 ## Quick start
 
 - Clone the repository `git clone https://github.com/lakhansamani/elasticsearch-graphql-engine.git`
